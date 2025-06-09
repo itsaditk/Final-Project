@@ -8,51 +8,56 @@ class FlightResultsPage {
         this.bookButton = () => cy.contains('button', 'Book')
     }
 
-
     sortByDepartureTime() {
         this.sortButton().click()
-        cy.wait(1000) // Wait for the dropdown to open
+        cy.wait(1000) 
         cy.contains('Departure time').click()
         cy.wait(5000)
     }
+    
     filterByAirline(airlineName) {
         this.filterButton().click().should('be.exist')
         cy.contains(/^Show all \d+ airlines$/).click()
         cy.get(`label[data-element-value="${airlineName}"]`).click()
         cy.get(`label[data-element-value="${airlineName}"] input[type="checkbox"]`)
             .scrollIntoView().check();
-        cy.wait(1000) // Wait for the checkbox to be checked
+        cy.wait(1000) 
         this.applyButton().click()
     }
 
     selectEarliestFlight() {
-        // Store flight details before selection
-        let flightDetails = {}
+        // Simpan waktu keberangkatan dan kedatangan
+        let flightTimes = { departureTime: '', arrivalTime: '' }
         
-        this.flightCards()
+        return this.flightCards()
             .should('have.length.greaterThan', 0)
             .first()
-            .within(() => {
-                // Capture flight details
-                cy.get('[data-testid="flightCard-flight-detail"]').then(($card) => {
-                    // Extract departure and arrival times
-                    cy.get('[data-testid="departure-time"]').invoke('text').then((depTime) => {
-                        flightDetails.departureTime = depTime.trim()
-                    })
-                    cy.get('[data-testid="arrival-time"]').invoke('text').then((arrTime) => {
-                        flightDetails.arrivalTime = arrTime.trim()
-                    })
-                })
+            .then(($card) => {
+                const cardText = $card.text()
+                const timePattern = /(\d{2}:\d{2})/g
+                const times = cardText.match(timePattern)
                 
-                cy.get('[data-testid="flightCard-flight-detail"]').click()
+                if (times && times.length >= 2) {
+                    flightTimes.departureTime = times[0]  
+                    flightTimes.arrivalTime = times[1]    
+                    cy.log(`Found times - Departure: ${times[0]}, Arrival: ${times[1]}`)
+                }
+                cy.wrap($card).find('[data-testid="flightCard-flight-detail"]').click()
             })
-        
-        // Store in cypress env for later validation
-        cy.wrap(flightDetails).as('selectedFlightDetails')
-        
-        this.bookButton().click()
-        
-        return cy.get('@selectedFlightDetails')
+            .then(() => {
+                cy.wait(2000)
+                this.bookButton().click()
+                
+                cy.wrap(flightTimes).as('selectedFlightTimes')
+                return cy.wrap(flightTimes)
+            })
+    }
+    
+    // Method untuk validasi bahwa kita di halaman results
+    validateResultsPage() {
+        cy.url().should('include', 'flight')
+        cy.get('[data-testid="web-refresh-flights-card"], [class*="flight"]')
+            .should('have.length.greaterThan', 0)
     }
 }
 

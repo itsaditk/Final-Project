@@ -69,16 +69,18 @@ class PassengerDetailsPage {
     }
 
     getPassengerData() {
+    return cy.fixture('agoda/PassengerData').then((data) => {
         const passengerData = {
-            firstName: Cypress.env('PASSENGER_FIRST_NAME'),
-            lastName: Cypress.env('PASSENGER_LAST_NAME'),
-            email: Cypress.env('PASSENGER_EMAIL'),
-            phone: Cypress.env('PASSENGER_PHONE')
+            firstName: data.defaultPassenger.firstName,
+            lastName: data.defaultPassenger.lastName,
+            email: data.defaultPassenger.email,
+            phone: data.defaultPassenger.phone
         }
         
         cy.wrap(passengerData).as('passengerData')
-        return cy.get('@passengerData')
-    }
+        return cy.wrap(passengerData)
+    })
+}
 }
 
 export default PassengerDetailsPage

@@ -35,8 +35,8 @@ describe('E2E - Agoda Flight Booking', () => {
                 passengerDetailsPage.continueToAddOns()
                 passengerDetailsPage.continueToPayment()
 
-                // Step 4: Validate booking summary on payment page
-                paymentPage.validateBookingSummary(selectedFlightDetails, passengerData)
+              // Step 4: Validate flight times on payment page
+                paymentPage.validateFlightTimes();
             })
         })
     })

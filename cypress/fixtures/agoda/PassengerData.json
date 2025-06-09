@@ -1,0 +1,23 @@
+{
+  "defaultPassenger": {
+    "firstName": "Adit",
+    "lastName": "Kurniawan",
+    "email": "aditKurniawan@example.com",
+    "phone": "81234567890",
+    "dateOfBirth": {
+      "date": "28",
+      "month": "August",
+      "year": "1999"
+    },
+    "nationality": "Indonesia",
+    "passport": {
+      "number": "09876543",
+      "country": "Indonesia",
+      "expiryDate": {
+        "date": "28",
+        "month": "December",
+        "year": "2030"
+      }
+    }
+  }
+}
