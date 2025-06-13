@@ -49,6 +49,7 @@ class FlightSearchPage {
             expect(params.get('arrivalTo')).to.include('SIN')
             expect(params.get('departDate')).to.eq(expectedDate)
         })
+        cy.wait(5000) // Tunggu hasil pencarian muncul
     }
 }
 

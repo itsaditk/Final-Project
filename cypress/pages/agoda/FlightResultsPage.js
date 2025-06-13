@@ -10,7 +10,6 @@ class FlightResultsPage {
 
     sortByDepartureTime() {
         this.sortButton().click()
-        cy.wait(1000) 
         cy.contains('Departure time').click()
         cy.wait(5000)
     }

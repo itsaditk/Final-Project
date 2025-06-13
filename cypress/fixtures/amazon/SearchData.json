@@ -1,0 +1,13 @@
+{
+  "searchTerm": "chair",
+  "sortOption": "price-desc-rank",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "expectedResults": {
+    "urlShouldInclude": ["/s?", "chair"],
+    "productPageUrlPattern": "/dp/",
+    "pricePattern": "^\\$\\d+$"
+  }
+}

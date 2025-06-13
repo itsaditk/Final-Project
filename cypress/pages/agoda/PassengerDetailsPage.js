@@ -23,40 +23,35 @@ class PassengerDetailsPage {
         this.continueToPaymentButton = () => cy.get('[data-testid="continue-to-payment-button"]')
     }
 
-    fillContactInformation() {
-        this.contactFirstName().type(Cypress.env('PASSENGER_FIRST_NAME'))
-        this.contactLastName().type(Cypress.env('PASSENGER_LAST_NAME'))
-        this.contactEmail().type(Cypress.env('PASSENGER_EMAIL'))
-        this.contactPhone().type(Cypress.env('PASSENGER_PHONE'))
+    fillContactInformation(data) {
+        this.contactFirstName().type(data.defaultPassenger.firstName);
+        this.contactLastName().type(data.defaultPassenger.lastName);
+        this.contactEmail().type(data.defaultPassenger.email);
+        this.contactPhone().type(data.defaultPassenger.phone);
     }
 
-    fillPassengerInformation() {
-        this.passengerSection().click()
-        
-        // Basic information
-        this.passengerFirstName().type(Cypress.env('PASSENGER_FIRST_NAME'))
-        this.passengerLastName().type(Cypress.env('PASSENGER_LAST_NAME'))
-        
-        // Date of birth
-        this.passengerDOBDate().type(Cypress.env('PASSENGER_DOB_DATE'))
-        this.passengerDOBMonth().click()
-        cy.get("li").contains(Cypress.env('PASSENGER_DOB_MONTH')).click()
-        this.passengerDOBYear().type(Cypress.env('PASSENGER_DOB_YEAR'))
-        
-        // Nationality
-        this.passengerNationality().click()
-        cy.get("li").contains(Cypress.env('PASSENGER_NATIONALITY')).click()
-        
-        // Passport information
-        this.passportNumber().type(Cypress.env('PASSPORT_NUMBER'))
-        this.passportCountry().click()
-        cy.get("li").contains(Cypress.env('PASSPORT_COUNTRY')).click()
-        
-        // Passport expiry
-        this.passportExpiryDate().type(Cypress.env('PASSPORT_EXPIRY_DATE'))
-        this.passengerExpiryMonth().click()
-        cy.get("li").contains(Cypress.env('PASSPORT_EXPIRY_MONTH')).click()
-        this.passportExpiryYear().type(Cypress.env('PASSPORT_EXPIRY_YEAR'))
+    fillPassengerInformation(data) {
+        this.passengerSection().click();
+
+        this.passengerFirstName().type(data.defaultPassenger.firstName);
+        this.passengerLastName().type(data.defaultPassenger.lastName);
+
+        this.passengerDOBDate().type(data.defaultPassenger.dateOfBirth.date);
+        this.passengerDOBMonth().click();
+        cy.get("li").contains(data.defaultPassenger.dateOfBirth.month).click();
+        this.passengerDOBYear().type(data.defaultPassenger.dateOfBirth.year);
+
+        this.passengerNationality().click();
+        cy.get("li").contains(data.defaultPassenger.nationality).click();
+
+        // this.passportNumber().type(data.defaultPassenger.passport.number);
+        // this.passportCountry().click();
+        // cy.get("li").contains(data.defaultPassenger.passport.country).click();
+
+        // this.passportExpiryDate().type(data.defaultPassenger.passport.expiryDate.date);
+        // this.passengerExpiryMonth().click();
+        // cy.get("li").contains(data.defaultPassenger.passport.expiryDate.month).click();
+        // this.passportExpiryYear().type(data.defaultPassenger.passport.expiryDate.year);
     }
 
     continueToAddOns() {

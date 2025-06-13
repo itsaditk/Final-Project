@@ -11,6 +11,7 @@ describe('E2E - Agoda Flight Booking', () => {
     beforeEach(() => {
         cy.clearCookies()
         cy.clearLocalStorage()
+        cy.fixture('agoda/PassengerData').as('passengerData');
     })
 
     it('Book Jakarta to Singapore flight with Malaysia Airlines', () => {
@@ -28,8 +29,10 @@ describe('E2E - Agoda Flight Booking', () => {
         flightResultsPage.selectEarliestFlight().then((selectedFlightDetails) => {
             
             // Step 3: Fill passenger details
-            passengerDetailsPage.fillContactInformation()
-            passengerDetailsPage.fillPassengerInformation()
+            cy.fixture('agoda/PassengerData').then((data) => {
+            passengerDetailsPage.fillContactInformation(data)
+            passengerDetailsPage.fillPassengerInformation(data)
+            })
             passengerDetailsPage.getPassengerData().then((passengerData) => {
                 
                 passengerDetailsPage.continueToAddOns()
