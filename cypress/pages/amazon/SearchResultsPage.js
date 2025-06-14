@@ -6,7 +6,7 @@ class SearchResultsPage {
 
     sortByPriceHighToLow() {
         this.sortDropdown().select('price-desc-rank', { force: true });
-        cy.wait(3000); // Wait for results to reload
+        cy.wait(3000); 
         return this;
     }
 
@@ -20,11 +20,7 @@ class SearchResultsPage {
 
             if (!found && !$el.text().includes('Sponsored')) {
                 found = true;
-
-                // Simpan elemen sebagai alias
                 cy.wrap($el).as('selectedProduct');
-
-                // Klik link di dalam elemen
                 cy.wrap($el).find('a').first().click({ force: true });
             }
         });

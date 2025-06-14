@@ -45,8 +45,6 @@ describe('E2E - Amazon Chair Search', () => {
                 // Final validation - expect name contains chair and price is displayed
                 expect(finalProductDetails.name.toLowerCase()).to.include('chair')
                 expect(finalProductDetails.price).to.match(/^\$\d{1,3}(,\d{3})*(\.\d{2})?$/)
-                
-                // Update final results for reporting
                 cy.wrap({
                     searchedItem: 'chair',
                     sortedBy: 'price-desc-rank',
@@ -60,7 +58,6 @@ describe('E2E - Amazon Chair Search', () => {
     })
 
     afterEach(() => {
-        // Generate final report - akan selalu ada karena di-initialize di beforeEach
         cy.get('@testResults').then((results) => {
             cy.log('=== AMAZON CHAIR SEARCH TEST RESULTS ===')
             cy.log(`Test Status: ${results.status}`)

@@ -5,14 +5,11 @@ class ProductDetailsPage {
     }
 
     validateProductDetails(expectedName, expectedPrice) {
-        // Validate we're on product page
         cy.url().should('include', '/dp/')
         
-        // Validate product name contains chair
         this.productTitle().should('be.visible')
         this.productTitle().invoke('text').should('include', 'Chair')
         
-        // Get and validate price (allowing for minor formatting differences)
         this.productPrice().should('be.visible')
         
         return this.getProductDetails()
